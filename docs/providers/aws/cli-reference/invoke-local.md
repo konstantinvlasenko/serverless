@@ -10,7 +10,7 @@ layout: Doc
 ### [Read this on the main serverless docs site](https://www.serverless.com/framework/docs/providers/aws/cli-reference/invoke-local)
 <!-- DOCS-SITE-LINK:END -->
 
-# Invoke Local
+# AWS - Invoke Local
 
 This runs your code locally by emulating the AWS Lambda environment. Please keep in mind, it's not a 100% perfect emulation, there may be some differences, but it works for the vast majority of users.  We mock the `context` with simple mock data.
 
@@ -61,3 +61,18 @@ This example will pass the json data in the `lib/data.json` file (relative to th
 ### Limitations
 
 Currently, `invoke local` only supports the NodeJs and Python runtimes.
+
+## Resource permissions
+
+Lambda functions assume an *IAM role* during execution: the framework creates this role, and set all the permission provided in the `iamRoleStatements` section of `serverless.yml`.
+
+Unless you explicitly state otherwise, every call to the AWS SDK inside the lambda function is made using this role (a temporary pair of key / secret is generated and set by AWS as environment variables, `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`).
+
+When you use `serverless invoke local`, the situation is quite different: the role isn't available (the function is executed on your local machine), so unless you set a different user directly in the code (or via a key pair of environment variables), the AWS SDK will use the default profile specified inside you AWS credential configuration file.
+
+Take a look to the official AWS documentation (in this particular instance, for the javascript SDK, but should be similar for all SDKs):
+
+- [http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-shared.html)
+- [http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-lambda.html](http://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/loading-node-credentials-lambda.html)
+
+Whatever approach you decide to implement, **be aware**: the set of permissions might be (and probably is) different, so you won't have an exact simulation of the *real* IAM policy in place.
