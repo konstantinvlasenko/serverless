@@ -10,7 +10,7 @@ layout: Doc
 ### [Read this on the main serverless docs site](https://www.serverless.com/framework/docs/providers/azure/guide/services)
 <!-- DOCS-SITE-LINK:END -->
 
-# Services
+# Azure - Services
 
 A `service` is like a project.  It's where you define your Azure Functions, the `events` that trigger them and any  `resources` they require, all in a file called `serverless.yml`.
 
@@ -39,16 +39,18 @@ This makes sense since related functions usually use common infrastructure resou
 
 ## Creation
 
-There isn't yet a `serverless create` command, so to get started you can instead start by installing the boilerplate from GitHub.
+To get started, you can simply use the `create` command to generate a new service:
 
 ```bash
-serverless install --url https://github.com/azure/boilerplate-azurefunctions --name my-app
+serverless create -t azure-nodejs --path <my-app>
 ```
+
+> Alternatively, you can use the `install` command to create a new service, based on an existing GitHub boilerplate: `serverless install --url https://github.com/azure/boilerplate-azurefunctions --name my-app`
 
 ## Contents
 
 You'll see the following files in your working directory:
-- `templates/serverless.yml`
+- `serverless.yml`
 - `handler.js`
 
 ### serverless.yml
@@ -78,9 +80,9 @@ plugins:
   - serverless-azure-functions
 
 functions:
-  hello: 
-     handler: templates/handler.hello
-     events: 
+  hello:
+     handler: handler.hello
+     events:
        - http: true
          x-azure-settings:
            authLevel : anonymous
@@ -88,7 +90,7 @@ functions:
 
 ### handler.js
 
-The `templates/handler.js` file contains your function code. The function definition in `serverless.yml` will point to this `templates/handler.js` file and the function exported here.
+The `handler.js` file contains your function code. The function definition in `serverless.yml` will point to this `handler.js` file and the function exported here.
 
 ### event.json
 

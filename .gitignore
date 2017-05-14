@@ -40,6 +40,10 @@ admin.env
 tmp
 .coveralls.yml
 tmpdirs-serverless
+*.zip
 
 # ESLint cache
 .eslintcache
+
+# Misc
+jest

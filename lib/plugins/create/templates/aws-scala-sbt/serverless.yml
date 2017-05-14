@@ -39,6 +39,7 @@ provider:
 #          - ""
 #          - - "arn:aws:s3:::"
 #            - "Ref" : "ServerlessDeploymentBucket"
+#            - "/*"
 
 # you can define service wide environment variables here
 #  environment:
@@ -75,6 +76,7 @@ functions:
 #            detail:
 #              state:
 #                - pending
+#      - cloudwatchLog: '/aws/lambda/hello'
 
 #    Define function environment variables here
 #    environment:

@@ -10,7 +10,7 @@ layout: Doc
 ### [Read this on the main serverless docs site](https://www.serverless.com/framework/docs/providers/azure/guide/deploying)
 <!-- DOCS-SITE-LINK:END -->
 
-# Deploying
+# Azure - Deploying
 
 The Serverless Framework was designed to provision your Azure Functions Functions, Triggers and Rules safely and quickly.  It does this via a couple of methods designed for different types of deployments.
 
@@ -57,3 +57,16 @@ serverless deploy function --function myFunction
 * During development, people will often run this command several times, as opposed to `serverless deploy` which is only run when larger infrastructure provisioning is required.
 
 Check out the [deploy command docs](../cli-reference/deploy.md) for all details and options.
+
+## Deploying a package
+
+This deployment option takes a deployment directory that has already been created with `serverless package` and deploys it to the cloud provider. This allows you to easier integrate CI / CD workflows with the Serverless Framework.
+
+```bash
+serverless deploy --package path-to-package
+```
+
+### How It Works
+
+- The argument to the `--package` flag is a directory that has been previously packaged by Serverless (with `serverless package`).
+- The deploy process bypasses the package step and uses the existing package to deploy and update Resources.
